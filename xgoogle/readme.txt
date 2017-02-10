@@ -1,4 +1,4 @@
-This is a Google library called 'xgoogle'. Current version is 1.4.
+This is a Google library called 'xgoogle'. Current version is 1.3.
 
 It's written by Peteris Krumins (peter@catonmat.net).
 His blog is at http://www.catonmat.net  --  good coders code, great reuse.
