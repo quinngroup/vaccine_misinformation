@@ -16,6 +16,7 @@ try:
     vaccine_search = GoogleSearch("vaccine safety") #term to serach
     vaccine_search.results_per_page = 10 
     results = vaccine_search.get_results() #iterable object
+    print len(results)
     for res in results:
         print res.title.encode("utf8")
         print res.desc.encode("utf8")
