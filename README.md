@@ -12,5 +12,16 @@ Using Google Custom Search API to extract URLs about vaccine information. Instru
 
 ##url.txt file
 
-The first 19 links in this file are from my manual search for ground truth vaccine articles. 
+The first 19 links in this file are from my manual search for ground truth vaccine articles.
+ 
 The next 100 links are from a Google CSE search using the term "vaccine safety".
+
+The next 100 links are from a Google CSE search using the term "vaccine information".
+
+The next 63 links are from a Google CSE search using the term "vaccine ingredients".  
+
+The next 100 links are from a Google CSE search using the term "vaccine and autism". 
+
+The next 100 links are from a Google CSE search using the term "vaccine schedule". 
+
+The next 100 links are from a Google CSE search using the term "vaccines". 

@@ -3,8 +3,7 @@ import csv
 #from bs4 import BeautifulSoup 
 
 #List that stores both url and text of vaccine webpages
-webpage_data = {'url': [],
-                'text': []}
+webpage_data = {'url': []}
 
 #Collect urls of labeled data from saved dataset.csv file
 #with open('Vaccine Dataset.csv', 'r') as csvfile:
@@ -26,7 +25,7 @@ def google_search(search_term, api_key, cse_id, **kwargs):
 
 for i in range(1, 100, 10): #range gets the next 10 results 
     results = google_search(
-        'vaccine safety', my_api_key, my_cse_key, start=i, num=10)
+        'vaccines', my_api_key, my_cse_key, start=i, num=10)
     for result in results:
         webpage_data['url'].append(result['formattedUrl'])
     
