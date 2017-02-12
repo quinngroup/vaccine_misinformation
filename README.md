@@ -9,3 +9,8 @@ Vaccination provides the most effective method of preventing infectious diseases
 ##Notes 
 
 Using Google Custom Search API to extract URLs about vaccine information. Instructions can be found here: https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search 
+
+##url.txt file
+
+The first 19 links in this file are from my manual search for ground truth vaccine articles. 
+The next 100 links are from a Google CSE search using the term "vaccine safety".
