@@ -2,7 +2,7 @@ import csv
 #import requests 
 #from bs4 import BeautifulSoup 
 
-#List that stores both url and text of vaccine webpages
+#List that stores url of vaccine webpages
 webpage_data = {'url': []}
 
 #Collect urls of labeled data from saved dataset.csv file
