@@ -25,3 +25,5 @@ The next 100 links are from a Google CSE search using the term "vaccine and auti
 The next 100 links are from a Google CSE search using the term "vaccine schedule". 
 
 The next 100 links are from a Google CSE search using the term "vaccines". 
+
+After removing duplicate webpage links, we are left with 567 links for analysis. 
