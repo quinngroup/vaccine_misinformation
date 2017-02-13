@@ -62,8 +62,8 @@ for url in urls:
     
         #add text to bigger list of webpage text
         webpage_data['text'].append(page_text)
-    except:
-        pass
+    except Exception as e:
+        print repr(e)
 
 print(len(webpage_data['url']))
 print(len(webpage_data['text']))
