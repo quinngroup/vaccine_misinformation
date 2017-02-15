@@ -26,4 +26,22 @@ The next 100 links are from a Google CSE search using the term "vaccine schedule
 
 The next 100 links are from a Google CSE search using the term "vaccines". 
 
+The next 100 links are from a Google CSE search using the term "vaccine injury". 
+
+The next 100 links are from a Google CSE search using the term "vaccine side effects". 
+
+The next 100 links are from a Google CSE search using the term "vaccines for children".
+
+The next 100 links are from a Google CSE search using the term "vaccine benefits". 
+
+The next 100 links are from a Google CSE search using the term "vaccine dangers". 
+
+The next 100 links are from a Google CSE search using the term "vaccine herd immunity".
+
+The next 100 links are from a Google CSE search using the term "vaccine mercury".
+
+The next 100 links are from a Google CSE search using the term "vaccine research".
+
+The next 100 links are from a Google CSE search using the term "vaccine yes or no".
+
 After removing duplicate webpage links, we are left with 567 links for analysis. 
