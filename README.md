@@ -44,4 +44,4 @@ The next 100 links are from a Google CSE search using the term "vaccine research
 
 The next 100 links are from a Google CSE search using the term "vaccine yes or no".
 
-After removing duplicate webpage links, we are left with 567 links for analysis. 
+After removing duplicate webpage links, we are left with 1334 links for analysis. 

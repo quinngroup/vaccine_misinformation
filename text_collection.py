@@ -19,6 +19,7 @@ def uniq(input):
 
 urls = uniq(urls)
 
+
 for url in urls:
     try:
         html = urllib.urlopen(url).read()
@@ -63,8 +64,8 @@ for url in urls:
         #add text to bigger list of webpage text
         webpage_data['text'].append(page_text)
     except Exception as e:
-        print repr(e)
+        #print repr(e)
+        pass
 
 print(len(webpage_data['url']))
 print(len(webpage_data['text']))
-
