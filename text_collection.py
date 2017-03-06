@@ -10,14 +10,14 @@ webpage_data = {'Title': [],
 urls = []
 
 #open Vaccine Dataset.csv to get urls 
-with open('Vaccine Dataset.csv', 'r') as csvfile:
+with open('CSVFiles/Vaccine Dataset.csv', 'r') as csvfile:
     reader = csv.reader(csvfile, dialect='excel')
     for row in reader:
         if(row[1] != 'Site URL'):
             urls.append(row[1]) #url is in second cell of csv
 
 #open Custom Search.csv to get urls 
-with open('Custom Search.csv', 'r') as csvfile:
+with open('CSVFiles/Custom Search.csv', 'r') as csvfile:
     reader = csv.reader(csvfile, dialect='excel')
     for row in reader:
         if(row[1] != 'Site URL'):
@@ -64,7 +64,7 @@ for url in urls:
                 # build a DataFrame with the extracted information
                 df = pd.DataFrame(webpage_data, 
                                   columns=['Title', 'Site URL', 'Text', 'Classifaction'])
-                df.to_csv('Text.csv', mode='a', index= False, 
+                df.to_csv('CSVFiles/Text.csv', mode='a', index= False, 
                           encoding='utf-8', header = False)
                 #reset in order to avoid running out of memory
                 webpage_data.clear()

@@ -6,7 +6,7 @@ webpage_data = {'Title' : [],
                 'Site URL': []}
 
 #Collect urls of labeled data from saved dataset.csv file
-#with open('Vaccine Dataset.csv', 'r') as csvfile:
+#with open('CSVFiles/Vaccine Dataset.csv', 'r') as csvfile:
  #   reader = csv.reader(csvfile, dialect='excel')
   #  for row in reader:
    #     webpage_data['url'].append(row[1]) #url is in second cell of csv
@@ -32,14 +32,16 @@ for i in range(1, 100, 10): #range gets the next 10 results
 # build a DataFrame with the extracted information
 df = pd.DataFrame(webpage_data, 
                   columns=['Title', 'Site URL'])
-df.to_csv('Custom Search.csv', mode='a', index= False, 
+df.to_csv('CSVFiles/Custom Search.csv', mode='a', index= False, 
           encoding='utf-8', header = False)
 
 #print(len(webpage_data['url']))
 #print(len(set(webpage_data['url'])))
 
+'''
 #write url results to txt file
 file = open("url2.txt", "a")
 for url in webpage_data['Site URL']:
     file.write(url)
     file.write('\n')
+'''
