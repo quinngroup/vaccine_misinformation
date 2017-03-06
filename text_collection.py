@@ -31,9 +31,7 @@ def uniq(input):
             output.append(x)
     return output
 
-print(len(urls))
 urls = uniq(urls)
-print(len(urls))
 
 #function to trim article to certain amount of words
 def word_trimmer(s, n):
@@ -41,38 +39,25 @@ def word_trimmer(s, n):
 
 urls = urls[20:] #remove inital 20 which we already have text on
 
-i = 0 #track how many urls have been processed in cycle
-j = 0 #track total number of urls already processed
-
 for url in urls:
-    if 'naturalnews' in url: #goose can't open this domain for some reason
-        pass
-    else:
-        try:
-            g = Goose()
-            article = g.extract(url=url)
-            unicode_text = article.cleaned_text
-            text = unicode_text.encode('ascii', 'ignore').replace('\n', '')
-            limited_text = word_trimmer(text, 5000)
-            title = article.title.encode('ascii', 'ignore')
+    try:
+        g = Goose()
+        article = g.extract(url=url)
+        unicode_text = article.cleaned_text
+        text = unicode_text.encode('ascii', 'ignore').replace('\n', '')
+        limited_text = word_trimmer(text, 5000)
+        title = article.title.encode('ascii', 'ignore')
+        if(limited_text != ''):
             webpage_data['Title'].append(title)
             webpage_data['Site URL'].append(url)
             webpage_data['Text'].append(limited_text)
-            i = i + 1
-            j = j + 1
-            if(i == 10 or j == len(urls)):
-                # build a DataFrame with the extracted information
-                df = pd.DataFrame(webpage_data, 
-                                  columns=['Title', 'Site URL', 'Text', 'Classifaction'])
-                df.to_csv('CSVFiles/Text.csv', mode='a', index= False, 
-                          encoding='utf-8', header = False)
-                #reset in order to avoid running out of memory
-                webpage_data.clear()
-                webpage_data = {'Title': [],
-                                'Site URL': [],
-                                'Text': []}
-                i = 0
-        except Exception as e:
-            print repr(e)
-            j = j + 1
-            #pass
+    except Exception as e:
+        print repr(e)
+        j = j + 1
+        #pass
+
+# build a DataFrame with the extracted information
+df = pd.DataFrame(webpage_data, 
+                  columns=['Title', 'Site URL', 'Text', 'Classifaction'])
+df.to_csv('CSVFiles/Text.csv', mode='w', index= False, 
+                          encoding='utf-8')
