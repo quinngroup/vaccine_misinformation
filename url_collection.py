@@ -1,7 +1,9 @@
 import csv
+import pandas as pd
  
 #List that stores url of vaccine webpages
-webpage_data = {'url': []}
+webpage_data = {'Title' : [],
+                'Site URL': []}
 
 #Collect urls of labeled data from saved dataset.csv file
 #with open('Vaccine Dataset.csv', 'r') as csvfile:
@@ -22,15 +24,22 @@ def google_search(search_term, api_key, cse_id, **kwargs):
 
 for i in range(1, 100, 10): #range gets the next 10 results 
     results = google_search(
-        'vaccine yes or no', my_api_key, my_cse_id, start=i, num=10)
+        'vaccine side effects', my_api_key, my_cse_id, start=i, num=10)
     for result in results:
-        webpage_data['url'].append(result['formattedUrl'])
+        webpage_data['Title'].append(result['title'])
+        webpage_data['Site URL'].append(result['link'])
     
-print(len(webpage_data['url']))
-print(len(set(webpage_data['url'])))
+# build a DataFrame with the extracted information
+df = pd.DataFrame(webpage_data, 
+                  columns=['Title', 'Site URL'])
+df.to_csv('Custom Search.csv', mode='a', index= False, 
+          encoding='utf-8', header = False)
+
+#print(len(webpage_data['url']))
+#print(len(set(webpage_data['url'])))
 
 #write url results to txt file
-file = open("url.txt", "a")
-for url in webpage_data['url']:
+file = open("url2.txt", "a")
+for url in webpage_data['Site URL']:
     file.write(url)
     file.write('\n')
