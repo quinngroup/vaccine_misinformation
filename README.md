@@ -18,7 +18,7 @@ This tutorial was used to help me build my model: https://medium.com/@klintcho/d
 
 ##'Vaccine Dataset.csv' and 'Custom Search.csv'
 
-The 'Vaccine Dataset.csv' file contains 20 URL links, along with the title of the article, and my classification of MISINFORMED or TRUE. These serve as our labeled documents in the model, and all classification of the 'ground truth' was done by me via fact checking. 
+The 'Vaccine Dataset.csv' file contains 20 URL links, along with the title of the article, text of the article, and my classification of MISINFORMED or TRUE. These serve as our labeled documents in the model, and all classification of the 'ground truth' was done by me via fact checking. 
 
 The 'Custome Search.csv' file contains 1500 URL links, along with the title of the article associated with that link. All of these links were extracted from the Google Custom Search Engine API using common vaccine queries into Google. Each query has 100 links associated with it (limiations of the API), and the queries used are as follows: "vaccine safety", "vaccine information", "vaccine ingredients", "vaccine and autism", "vaccine schedule", "vaccines", "vaccine injury", "vaccine side effects", "vaccines for children", "vaccine benefits", "vaccine dangers", "vaccine herd immunity", "vaccine mercury", "vaccine research", and "vacine yes or no". 
  
