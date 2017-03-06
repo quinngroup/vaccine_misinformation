@@ -1,13 +1,27 @@
-import urllib 
-from bs4 import BeautifulSoup
+import csv
+from goose import Goose
+import pandas as pd
 
 #List that stores url and text of vaccine webpages
-webpage_data = {'url': [],
-                'text': []}
+webpage_data = {'Title': [],
+                'Site URL': [],
+                'Text': []}
 
-#open url.txt file to get all urls
-with open('url.txt') as file:
-    urls = file.readlines()
+urls = []
+
+#open Vaccine Dataset.csv to get urls 
+with open('Vaccine Dataset.csv', 'r') as csvfile:
+    reader = csv.reader(csvfile, dialect='excel')
+    for row in reader:
+        if(row[1] != 'Site URL'):
+            urls.append(row[1]) #url is in second cell of csv
+
+#open Custom Search.csv to get urls 
+with open('Custom Search.csv', 'r') as csvfile:
+    reader = csv.reader(csvfile, dialect='excel')
+    for row in reader:
+        if(row[1] != 'Site URL'):
+            urls.append(row[1]) #url is in second cell of csv
 
 #remove duplicate links without having to use set
 def uniq(input):
@@ -17,55 +31,48 @@ def uniq(input):
             output.append(x)
     return output
 
+print(len(urls))
 urls = uniq(urls)
+print(len(urls))
 
+#function to trim article to certain amount of words
+def word_trimmer(s, n):
+    return ' '.join(s.split()[:n])
+
+urls = urls[20:] #remove inital 20 which we already have text on
+
+i = 0 #track how many urls have been processed in cycle
+j = 0 #track total number of urls already processed
 
 for url in urls:
-    try:
-        html = urllib.urlopen(url).read()
-        webpage_data['url'].append(url)
-        soup = BeautifulSoup(html, 'lxml')
-
-        #get rid of any script or stylisitc crap
-        for script in soup(["scrip", "style"]):
-            script.extract() #remove script
-
-        #get text
-        text = soup.get_text()
-
-        # break into lines and remove leading and trailing space on each
-        lines = (line.strip() for line in text.splitlines())
-        # break multi-headlines into a line each
-        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-        # drop blank lines
-        text = '\n'.join(chunk for chunk in chunks if chunk)
-
-        #convert unicode to string
-        text = text.encode("utf-8")
-
-        #Get rid of non-body text
-        raw_strings = str.splitlines(text)
-        long_text = []
-        for string in raw_strings:
-            if len(string) > 200:
-                long_text.append(string)
-
-        #Get rid of excess text that don't appear to be sentences
-        sentences = []
-        for text in long_text:
-            if '[' in text or '|' in text or '=' in text or '&' in text or '\\' in text:
-                pass
-            else:
-                sentences.append(text)
-
-        #join list of sentences into one string
-        page_text = '\n'.join(sentences)
-    
-        #add text to bigger list of webpage text
-        webpage_data['text'].append(page_text)
-    except Exception as e:
-        #print repr(e)
+    if 'naturalnews' in url: #goose can't open this domain for some reason
         pass
-
-print(len(webpage_data['url']))
-print(len(webpage_data['text']))
+    else:
+        try:
+            g = Goose()
+            article = g.extract(url=url)
+            unicode_text = article.cleaned_text
+            text = unicode_text.encode('ascii', 'ignore').replace('\n', '')
+            limited_text = word_trimmer(text, 5000)
+            title = article.title.encode('ascii', 'ignore')
+            webpage_data['Title'].append(title)
+            webpage_data['Site URL'].append(url)
+            webpage_data['Text'].append(limited_text)
+            i = i + 1
+            j = j + 1
+            if(i == 10 or j == len(urls)):
+                # build a DataFrame with the extracted information
+                df = pd.DataFrame(webpage_data, 
+                                  columns=['Title', 'Site URL', 'Text', 'Classifaction'])
+                df.to_csv('Text.csv', mode='a', index= False, 
+                          encoding='utf-8', header = False)
+                #reset in order to avoid running out of memory
+                webpage_data.clear()
+                webpage_data = {'Title': [],
+                                'Site URL': [],
+                                'Text': []}
+                i = 0
+        except Exception as e:
+            print repr(e)
+            j = j + 1
+            #pass
