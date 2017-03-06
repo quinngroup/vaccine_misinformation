@@ -24,7 +24,7 @@ def google_search(search_term, api_key, cse_id, **kwargs):
 
 for i in range(1, 100, 10): #range gets the next 10 results 
     results = google_search(
-        'vaccine side effects', my_api_key, my_cse_id, start=i, num=10)
+        'vaccine yes or no', my_api_key, my_cse_id, start=i, num=10)
     for result in results:
         webpage_data['Title'].append(result['title'])
         webpage_data['Site URL'].append(result['link'])
