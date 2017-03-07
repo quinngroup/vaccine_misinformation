@@ -1,3 +1,6 @@
+from __future__ import with_statement # Required in 2.5
+import signal
+from contextlib import contextmanager
 import csv
 from goose import Goose
 import pandas as pd
@@ -39,22 +42,35 @@ def word_trimmer(s, n):
 
 urls = urls[20:] #remove inital 20 which we already have text on
 
+#function used to skip iteration if goose takes too long to extract
+class TimeoutException(Exception): pass
+
+@contextmanager
+def time_limit(seconds):
+    def signal_handler(signum, frame):
+        raise TimeoutException, "Timed out!"
+    signal.signal(signal.SIGALRM, signal_handler)
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+
 for url in urls:
     try:
-        g = Goose()
-        article = g.extract(url=url)
-        unicode_text = article.cleaned_text
-        text = unicode_text.encode('ascii', 'ignore').replace('\n', '')
-        limited_text = word_trimmer(text, 5000)
-        title = article.title.encode('ascii', 'ignore')
-        if(limited_text != ''):
-            webpage_data['Title'].append(title)
-            webpage_data['Site URL'].append(url)
-            webpage_data['Text'].append(limited_text)
+        with time_limit(10):
+            g = Goose()
+            article = g.extract(url=url)
+            unicode_text = article.cleaned_text
+            text = unicode_text.encode('ascii', 'ignore').replace('\n', '')
+            limited_text = word_trimmer(text, 5000)
+            title = article.title.encode('ascii', 'ignore')
+            if(limited_text != ''):
+                webpage_data['Title'].append(title)
+                webpage_data['Site URL'].append(url)
+                webpage_data['Text'].append(limited_text)
     except Exception as e:
         print repr(e)
-        j = j + 1
-        #pass
 
 # build a DataFrame with the extracted information
 df = pd.DataFrame(webpage_data, 
