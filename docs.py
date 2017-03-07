@@ -29,7 +29,7 @@ with open('CSVFiles/Vaccine Dataset.csv', 'r') as csvfile:
                 file.close()
                 misinformedCounter = misinformedCounter + 1
 
-'''
+
 #open Text.csv to get custom search text
 with open('CSVFiles/Text.csv', 'r') as csvfile:
     reader = csv.reader(csvfile, dialect='excel')
@@ -37,11 +37,11 @@ with open('CSVFiles/Text.csv', 'r') as csvfile:
         if(row[2] != 'Text'):
             text = row[2] #text is in third cell of csv
             #write text results to txt file
-            directory = 'Documents/UnlabeledDocuments/'
-            label = 'Doc' + str(documentCounter) + '.txt'
+            directory = 'Documents/UnlabeledDocumenets/'
+            label = 'Unknown' + str(documentCounter) + '.txt'
             filename = directory + label
             file = open(filename, "w")
             file.write(text)
             file.close()
             documentCounter = documentCounter + 1
-'''
+
