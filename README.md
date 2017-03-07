@@ -22,4 +22,8 @@ The 'Vaccine Dataset.csv' file contains 20 URL links, along with the title of th
 
 The 'Custom Search.csv' file contains 1500 URL links, along with the title of the article associated with that link. All of these links were extracted from the Google Custom Search Engine API using common vaccine queries into Google. Each query has 100 links associated with it (limiations of the API), and the queries used are as follows: "vaccine safety", "vaccine information", "vaccine ingredients", "vaccine and autism", "vaccine schedule", "vaccines", "vaccine injury", "vaccine side effects", "vaccines for children", "vaccine benefits", "vaccine dangers", "vaccine herd immunity", "vaccine mercury", "vaccine research", and "vacine yes or no". 
 
+The 'Text.csv" file contains 1096 of the custom search url links and their corresponding main article text. The reason some links got eliminated are either that the Goose extractor could not find their text within the HTML, or Goose timed out in trying to reach that URL. 
+
 After removing duplicate webpage links from the original 1520, we are left with 1411 links for analysis.  
+
+After running text collection algorithm, we are left with the original 20 links, and 1096 of the custom search links. 
