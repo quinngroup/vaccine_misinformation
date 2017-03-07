@@ -1,4 +1,4 @@
-from __future__ import with_statement # Required in 2.5
+from __future__ import with_statement 
 import signal
 from contextlib import contextmanager
 import csv
@@ -10,7 +10,7 @@ webpage_data = {'Title': [],
                 'Site URL': [],
                 'Text': []}
 
-urls = []
+urls = [] #iterable for text extraction
 
 #open Vaccine Dataset.csv to get urls 
 with open('CSVFiles/Vaccine Dataset.csv', 'r') as csvfile:
@@ -58,7 +58,7 @@ def time_limit(seconds):
 
 for url in urls:
     try:
-        with time_limit(10):
+        with time_limit(10): #skip if url takes longer than 10 seconds
             g = Goose()
             article = g.extract(url=url)
             unicode_text = article.cleaned_text
