@@ -18,7 +18,6 @@ for file in classifiedDocLabels:
     docLabels.append(file)
 for file in unlabeledDocLabels: 
     docLabels.append(file)
-print(docLabels[1:21])
 
 i = 0 #conter to switch between two directories
 data = [] #array to hold all the text documents
@@ -35,6 +34,13 @@ for doc in docLabels:
         data.append(f.read())
         f.close()
 
+labeledData = []
+for doc in classifiedDocLabels:
+    path = 'Documents/ClassifiedDocuments/' + doc
+    f = open(path, 'r')
+    labeledData.append(f.read())
+    f.close()
+    
 #class needed for doc2vec model
 class DocIterator(object):
     def __init__(self, doc_list, labels_list):
@@ -44,27 +50,52 @@ class DocIterator(object):
         for idx, doc in enumerate(self.doc_list):
             yield LabeledSentence(words=doc.split(),tags=[self.labels_list[idx]])
 
-
 #iterator object for the doc2vec model
 it = DocIterator(data, docLabels)
 
-#build the Doc2Vec model at a fixed learning rate
-model = gensim.models.Doc2Vec(size=300, window=10, min_count=3, 
+#iterator object for the labeled data doc2vec model
+labeledIt = DocIterator(labeledData, classifiedDocLabels)
+
+dims = [100, 200, 300]
+
+for dim in dims:
+
+    #build the Doc2Vec model at a fixed learning rate
+    model = gensim.models.Doc2Vec(size=dim, window=8, min_count=3, 
                               workers = multiprocessing.cpu_count(),
                               alpha=0.025, min_alpha=0.025)
 
-#build vocab from sequence of sentence
-model.build_vocab(it)
+    #build vocab from sequence of sentence
+    model.build_vocab(labeledIt)
 
-#training the model on the text corpus
-for epoch in range(10):
-    model.train(it)
-    model.alpha -= 0.002 # decrease the learning rate
-    model.min_alpha = model.alpha # fix the learning rate, no deca
-    model.train(it)
+    #training the model on the text corpus
+    for epoch in range(10):
+        model.train(labeledIt)
+        model.alpha -= 0.002 # decrease the learning rate
+        model.min_alpha = model.alpha # fix the learning rate, no deca
+        model.train(labeledIt)
 
-#save the model
-model.save("doc2vec.model")
+    #save the model
+    string = 'labeledDoc2Vec' + str(dim) + '.model'
+    model.save(string)
 
-#quick test
-print model.most_similar('True3.txt')
+for dim in dims:
+    #build the Doc2Vec model at a fixed learning rate
+    model = gensim.models.Doc2Vec(size=300, window=8, min_count=3, 
+                                  workers = multiprocessing.cpu_count(),
+                                  alpha=0.025, min_alpha=0.025)
+
+    #build vocab from sequence of sentence
+    model.build_vocab(it)
+
+    #training the model on the text corpus
+    for epoch in range(10):
+        model.train(it)
+        model.alpha -= 0.002 # decrease the learning rate
+        model.min_alpha = model.alpha # fix the learning rate, no deca
+        model.train(it)
+
+    #save the model
+    string = 'Doc2Vec' + str(dim) + '.model'
+    model.save(string)
+

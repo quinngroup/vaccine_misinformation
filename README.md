@@ -27,3 +27,9 @@ The 'Text.csv" file contains 1096 of the custom search url links and their corre
 After removing duplicate webpage links from the original 1520, we are left with 1411 links for analysis.  
 
 After running text collection algorithm, we are left with the original 20 links, and 1096 of the custom search links. 
+
+##Models
+
+The Doc2Vec#00 contain doc2vec models built on both labeled and unlabeled data using varying numbers of dimensions denoted by #00. The labeledDoc2Vec#00 models contain models built on only labeled documents using varying numbers of dimensions denoted by #00. 
+
+Found that labeled documents give a classification accuracy of .75 on 100 and 200 dimensions and accuracy of 0.7 on 300 dimensions. All three models result in very similar average cosine similarities for the most similar documents. 
