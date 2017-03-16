@@ -30,6 +30,7 @@ After running text collection algorithm, we are left with the original 20 links,
 
 ##Models
 
-The Doc2Vec#00 contain doc2vec models built on both labeled and unlabeled data using varying numbers of dimensions denoted by #00. The labeledDoc2Vec#00 models contain models built on only labeled documents using varying numbers of dimensions denoted by #00. 
+The Doc2Vecx00 contain doc2vec models built on both labeled and unlabeled data using varying numbers of dimensions denoted by x00. The labeledDoc2Vecx00 models contain models built on only labeled documents using varying numbers of dimensions denoted by x00. 
 
 Found that labeled documents give a classification accuracy of .75 on 100 and 200 dimensions and accuracy of 0.7 on 300 dimensions. All three models result in very similar average cosine similarities for the most similar documents. 
+Update: After filtering out stopwords, labeled documents give a classification accuracy of 0.75 for dimension size of 100, and 0.8 for dimension sizes of 200 and 300.  
