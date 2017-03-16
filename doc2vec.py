@@ -24,8 +24,8 @@ for file in unlabeledDocLabels:
     docLabels.append(file)
 
 stopwords = stopwords.words("english") #stopwords list
-#tokenizer = RegexpTokenizer(r'\w+')
-#p_stemmer = PorterStemmer()
+tokenizer = RegexpTokenizer(r'\w+')
+p_stemmer = PorterStemmer()
 
 #function to preprocess text
 def process_text(openFile, numbers, stemming):
