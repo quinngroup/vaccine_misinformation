@@ -4,6 +4,9 @@ import multiprocessing
 import gensim
 from gensim.models.doc2vec import LabeledSentence
 from nltk.corpus import stopwords
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem.porter import PorterStemmer
+import re
 
 #gather classified documents
 classifiedDocLabels = []
@@ -21,6 +24,35 @@ for file in unlabeledDocLabels:
     docLabels.append(file)
 
 stopwords = stopwords.words("english") #stopwords list
+#tokenizer = RegexpTokenizer(r'\w+')
+#p_stemmer = PorterStemmer()
+
+#function to preprocess text
+def process_text(openFile, numbers, stemming):
+    #clean and tokenize document string
+    raw = openFile.read().lower()
+    raw = unicode(raw, errors='replace')
+    cleanedText = ' '.join([word for word in raw.split() if word not in stopwords])
+    
+    if(numbers == True or stemming == True):
+        tokens = tokenizer.tokenize(cleanedText)
+        if(numbers == True):
+            # remove numbers
+            number_tokens = [re.sub(r'[\d]', ' ', i) for i in tokens]
+            number_tokens = ' '.join(number_tokens).split()
+        if(stemming == True):    
+            if(numbers == True):
+                #stem tokens
+                stemmed_tokens = [p_stemmer.stem(i) for i in number_tokens]
+            else:
+                stemmed_tokens = [p_stemmer.stem(i) for i in tokens]
+        if(stemming == True):
+            cleanedText = ' '.join(stemmed_tokens)
+        else:
+            cleanedText = ' '.join(number_tokens)
+    
+    #return thet cleaned text 
+    return cleanedText
 
 i = 0 #conter to switch between two directories
 data = [] #array to hold all the text documents
@@ -28,29 +60,23 @@ for doc in docLabels:
     if i < 20:
         path = 'Documents/ClassifiedDocuments/' + doc
         f = open(path, 'r')
-        raw = f.read().lower()
-        raw = unicode(raw, errors='replace')
-        noStopWordsString = ' '.join([word for word in raw.split() if word not in stopwords])
-        data.append(noStopWordsString)
+        cleanedText = process_text(f, False, False)
+        data.append(cleanedText)
         i = i + 1
         f.close()
     else:
         path = 'Documents/UnlabeledDocumenets/' + doc
         f = open(path, 'r')
-        raw = f.read().lower()
-        raw = unicode(raw, errors='replace')
-        noStopWordsString = ' '.join([word for word in raw.split() if word not in stopwords])
-        data.append(noStopWordsString)
+        cleanedText = process_text(f, False, False)
+        data.append(cleanedText)
         f.close()
 
 labeledData = []
 for doc in classifiedDocLabels:
     path = 'Documents/ClassifiedDocuments/' + doc
     f = open(path, 'r')
-    raw = f.read().lower()
-    raw = unicode(raw, errors='replace')
-    noStopWordsString = ' '.join([word for word in raw.split() if word not in stopwords])
-    labeledData.append(noStopWordsString.encode('utf-8'))
+    cleanedText = process_text(f, False, False)
+    labeledData.append(cleanedText)
     f.close()
 
 
