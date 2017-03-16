@@ -2,7 +2,8 @@ from os import listdir
 from os.path import isfile, join
 import multiprocessing
 import gensim
-LabeledSentence = gensim.models.doc2vec.LabeledSentence
+from gensim.models.doc2vec import LabeledSentence
+from nltk.corpus import stopwords
 
 #gather classified documents
 classifiedDocLabels = []
@@ -19,28 +20,41 @@ for file in classifiedDocLabels:
 for file in unlabeledDocLabels: 
     docLabels.append(file)
 
+stopwords = stopwords.words("english") #stopwords list
+
 i = 0 #conter to switch between two directories
 data = [] #array to hold all the text documents
 for doc in docLabels:
     if i < 20:
         path = 'Documents/ClassifiedDocuments/' + doc
         f = open(path, 'r')
-        data.append(f.read())
+        raw = f.read().lower()
+        raw = unicode(raw, errors='replace')
+        noStopWordsString = ' '.join([word for word in raw.split() if word not in stopwords])
+        data.append(noStopWordsString)
         i = i + 1
         f.close()
     else:
         path = 'Documents/UnlabeledDocumenets/' + doc
         f = open(path, 'r')
-        data.append(f.read())
+        raw = f.read().lower()
+        raw = unicode(raw, errors='replace')
+        noStopWordsString = ' '.join([word for word in raw.split() if word not in stopwords])
+        data.append(noStopWordsString)
         f.close()
 
 labeledData = []
 for doc in classifiedDocLabels:
     path = 'Documents/ClassifiedDocuments/' + doc
     f = open(path, 'r')
-    labeledData.append(f.read())
+    raw = f.read().lower()
+    raw = unicode(raw, errors='replace')
+    noStopWordsString = ' '.join([word for word in raw.split() if word not in stopwords])
+    labeledData.append(noStopWordsString.encode('utf-8'))
     f.close()
-    
+
+
+
 #class needed for doc2vec model
 class DocIterator(object):
     def __init__(self, doc_list, labels_list):
@@ -79,6 +93,7 @@ for dim in dims:
     string = 'labeledDoc2Vec' + str(dim) + '.model'
     model.save(string)
 
+'''
 for dim in dims:
     #build the Doc2Vec model at a fixed learning rate
     model = gensim.models.Doc2Vec(size=300, window=8, min_count=3, 
@@ -99,3 +114,4 @@ for dim in dims:
     string = 'Doc2Vec' + str(dim) + '.model'
     model.save(string)
 
+'''
