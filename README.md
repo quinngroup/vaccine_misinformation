@@ -28,9 +28,10 @@ After removing duplicate webpage links from the original 1520, we are left with 
 
 After running text collection algorithm, we are left with the original 20 links, and 1096 of the custom search links. 
 
+##Hyperparameter Optimization
+
+Given that the Doc2Vec model is sensitve to the dimensionality, window size, and min count word parameters, I decided to run the doc2vec model on 216 different combinations of these parameters to see what would result in the best classification inference accuracy when using only the labeled data. The results of the hyperparameter optimization suggests that a vector dimensionality of 1000, window size of 6, and min count of 4 results in the highest classification accuracy (0.95). These paramters will be used when building the doc2vec model on all data. 
+
 ##Models
 
-The Doc2Vecx00 contain doc2vec models built on both labeled and unlabeled data using varying numbers of dimensions denoted by x00. The labeledDoc2Vecx00 models contain models built on only labeled documents using varying numbers of dimensions denoted by x00. 
-
-Found that labeled documents give a classification accuracy of .75 on 100 and 200 dimensions and accuracy of 0.7 on 300 dimensions. All three models result in very similar average cosine similarities for the most similar documents. 
-Update: After filtering out stopwords, labeled documents give a classification accuracy of 0.75 for dimension size of 100, and 0.8 for dimension sizes of 200 and 300.  
+This directory contains the 2 models, one with labeled data only and one withboth labeled and unlabeled data, built on the optimized hyperparameters described above. 
