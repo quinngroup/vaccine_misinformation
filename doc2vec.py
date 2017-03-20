@@ -96,48 +96,39 @@ it = DocIterator(data, docLabels)
 #iterator object for the labeled data doc2vec model
 labeledIt = DocIterator(labeledData, classifiedDocLabels)
 
-dims = [100, 200, 300]
-
-for dim in dims:
-
-    #build the Doc2Vec model at a fixed learning rate
-    model = gensim.models.Doc2Vec(size=dim, window=8, min_count=3, 
+#build the Doc2Vec model at a fixed learning rate
+model = gensim.models.Doc2Vec(size=1000, window=6, min_count=4, 
                               workers = multiprocessing.cpu_count(),
                               alpha=0.025, min_alpha=0.025)
 
-    #build vocab from sequence of sentence
-    model.build_vocab(labeledIt)
+#build vocab from sequence of sentence
+model.build_vocab(labeledIt)
 
-    #training the model on the text corpus
-    for epoch in range(10):
-        model.train(labeledIt)
-        model.alpha -= 0.002 # decrease the learning rate
-        model.min_alpha = model.alpha # fix the learning rate, no deca
-        model.train(labeledIt)
+#training the model on the text corpus
+for epoch in range(10):
+    model.train(labeledIt)
+    model.alpha -= 0.002 # decrease the learning rate
+    model.min_alpha = model.alpha # fix the learning rate, no deca
+    model.train(labeledIt)
 
-    #save the model
-    string = 'labeledDoc2Vec' + str(dim) + '.model'
-    model.save(string)
+#save the model
+model.save('Models/labeledDoc2Vec.model')
 
-'''
-for dim in dims:
-    #build the Doc2Vec model at a fixed learning rate
-    model = gensim.models.Doc2Vec(size=300, window=8, min_count=3, 
-                                  workers = multiprocessing.cpu_count(),
-                                  alpha=0.025, min_alpha=0.025)
 
-    #build vocab from sequence of sentence
-    model.build_vocab(it)
+#build the Doc2Vec model at a fixed learning rate
+model = gensim.models.Doc2Vec(size=1000, window=6, min_count=4, 
+                              workers = multiprocessing.cpu_count(),
+                              alpha=0.025, min_alpha=0.025)
 
-    #training the model on the text corpus
-    for epoch in range(10):
-        model.train(it)
-        model.alpha -= 0.002 # decrease the learning rate
-        model.min_alpha = model.alpha # fix the learning rate, no deca
-        model.train(it)
+#build vocab from sequence of sentence
+model.build_vocab(it)
 
-    #save the model
-    string = 'Doc2Vec' + str(dim) + '.model'
-    model.save(string)
+#training the model on the text corpus
+for epoch in range(10):
+    model.train(it)
+    model.alpha -= 0.002 # decrease the learning rate
+    model.min_alpha = model.alpha # fix the learning rate, no deca
+    model.train(it)
 
-'''
+#save the model
+model.save('Models/Doc2Vec.model')
