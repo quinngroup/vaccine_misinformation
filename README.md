@@ -2,11 +2,11 @@
 
 This is the repo for Jonathan Waring's CURO 2017 project. 
 
-##Abstract 
+## Abstract 
 
 Vaccination provides the most effective method of preventing infectious diseases. While the effectiveness and safety of vaccines has been widely studied and verified, there is still opposition from the anti-vaccine movement. It has led to vaccine hesitancy, which is defined as a delay in acceptance or a refusal of vaccine services. It is an ever-growing and constantly changing problem that needs constant surveillance. The Internet plays a large role in disseminating vaccine misinformation to a large number of people, which contributes to the vaccine hesitancy problem. In order to combat the spread of misinformation online, it is important to first recognize true facts from false ones. We attempt to develop a machine learning strategy using natural language processing (NLP) that allows one to identify misinformation in vaccine-related webpages. This will be accomplished through the use of the low-dimensional document embedding algorithm, Doc2Vec. Through the use of semi-supervised learning, we take a small sample of manually labeled vaccine webpages and a large amount of unlabeled vaccine webpages, and attempt to classify misinformed webpages from accurate ones. Doc2Vec also provides methods for determining how semantically similar two documents may be, which can be used to determine what makes a vaccine webpage misinformed. The results of this study could enable both public health practitioners and the general public to monitor vaccine misinformation online in order to reduce vaccine hesitancy and identify strategies to improve vaccine education.  
 
-##Resources
+## Resources
 
 Using Google Custom Search API to extract URLs about vaccine information. Instructions can be found here: https://stackoverflow.com/questions/37083058/programmatically-searching-google-in-python-using-custom-search 
 
@@ -16,7 +16,7 @@ Using the gensim libary to build our doc2vec models. Information can be found he
 A good explanation of the model is found here: https://rare-technologies.com/doc2vec-tutorial/. 
 This tutorial was used to help me build my model: https://medium.com/@klintcho/doc2vec-tutorial-using-gensim-ab3ac03d3a1#.q8qtp8n81. 
 
-##CSV Files
+## CSV Files
 
 The 'Vaccine Dataset.csv' file contains 20 URL links, along with the title of the article, text of the article, and my classification of MISINFORMED or TRUE. These serve as our labeled documents in the model, and all classification of the 'ground truth' was done by me via fact checking. 
 
@@ -28,10 +28,22 @@ After removing duplicate webpage links from the original 1520, we are left with 
 
 After running text collection algorithm, we are left with the original 20 links, and 1096 of the custom search links. 
 
+<<<<<<< HEAD
 ##Hyperparameter Optimization
 
 Given that the Doc2Vec model is sensitve to the dimensionality, window size, and min count word parameters, I decided to run the doc2vec model on 216 different combinations of these parameters to see what would result in the best classification inference accuracy when using only the labeled data. The results of the hyperparameter optimization suggests that a vector dimensionality of 1000, window size of 6, and min count of 4 results in the highest classification accuracy (0.95). These paramters will be used when building the doc2vec model on all data. 
+=======
+## Models
+>>>>>>> d3b3f568b5ab986a871cc7d945947cc2d01cd102
 
 ##Models
 
+<<<<<<< HEAD
 This directory contains the 2 models, one with labeled data only and one withboth labeled and unlabeled data, built on the optimized hyperparameters described above. 
+=======
+Found that labeled documents give a classification accuracy of .75 on 100 and 200 dimensions and accuracy of 0.7 on 300 dimensions. All three models result in very similar average cosine similarities for the most similar documents. 
+
+Update: After filtering out stopwords, labeled documents give a classification accuracy of 0.75 for dimension size of 100, and 0.8 for dimension sizes of 200 and 300.  
+
+Update, part 2: Added option to filter out numbers, as well as option for stemming. Both options led to classification accuracies that were worse than just filtering stop words (0.65 and 0.7 for stemming and 0.7 and 0.75 for numbers). 
+>>>>>>> d3b3f568b5ab986a871cc7d945947cc2d01cd102
