@@ -30,7 +30,7 @@ After running text collection algorithm, we are left with the original 20 links,
 
 ## Hyperparameter Optimization
 
-Given that the Doc2Vec model is sensitve to the dimensionality, window size, and min count word parameters, I decided to run the doc2vec model on 216 different combinations of these parameters to see what would result in the best classification inference accuracy when using only the labeled data. The results of the hyperparameter optimization suggests that a vector dimensionality of 100 or 1000, window size of 10 or 8, and min count of 4 results in the highest classification accuracy (0.90). These paramters will be used when building the doc2vec model on all data. 
+Given that the Doc2Vec model is sensitve to the dimensionality, window size, and min count word parameters, I decided to run the doc2vec model on 216 different combinations of these parameters to see what would result in the best classification inference accuracy when using only the labeled data. The results of the hyperparameter optimization suggests that a vector dimensionality of 100 or 1000, window size of 10 or 8, and min count of 4 results in the highest classification accuracy (0.85). These paramters will be used when building the doc2vec model on all data. 
 
 ## Models
 
