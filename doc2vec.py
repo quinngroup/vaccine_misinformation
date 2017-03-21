@@ -97,7 +97,7 @@ it = DocIterator(data, docLabels)
 labeledIt = DocIterator(labeledData, classifiedDocLabels)
 
 #build the Doc2Vec model at a fixed learning rate
-model = gensim.models.Doc2Vec(size=1000, window=6, min_count=4, 
+model = gensim.models.Doc2Vec(size=1000, window=8, min_count=4, 
                               workers = multiprocessing.cpu_count(),
                               alpha=0.025, min_alpha=0.025)
 
@@ -112,11 +112,11 @@ for epoch in range(10):
     model.train(labeledIt)
 
 #save the model
-model.save('Models/labeledDoc2Vec.model')
+model.save('Models/labeledDoc2Vec2.model')
 
 
 #build the Doc2Vec model at a fixed learning rate
-model = gensim.models.Doc2Vec(size=1000, window=6, min_count=4, 
+model = gensim.models.Doc2Vec(size=1000, window=8, min_count=4, 
                               workers = multiprocessing.cpu_count(),
                               alpha=0.025, min_alpha=0.025)
 
@@ -131,4 +131,5 @@ for epoch in range(10):
     model.train(it)
 
 #save the model
-model.save('Models/Doc2Vec.model')
+model.save('Models/Doc2Vec2.model')
+
