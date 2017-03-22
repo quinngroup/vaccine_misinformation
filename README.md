@@ -41,9 +41,13 @@ This directory contains the 4 models, one with labeled data only and one withbot
 1. Build a 'supervised' classification model using the inferred documents as the training data. Test the model on the known labeled documents. Accuracry results are:
  
 Logistic Regression Accuracy: 0.8
+
 Naive Bayes Accuracy: 0.95
+
 SVM Accuracy: 0.8
+
 Random Forest Accuracy: 0.55
+
 KNN Accuracy: 0.5
 
 I am assuming that Naive Bayes and SVM are performing better as they are generally the preferred models for text classification from documents embedded as vectors. Not sure if that is a correct assumption to make or not. 
@@ -51,9 +55,13 @@ I am assuming that Naive Bayes and SVM are performing better as they are general
 2. Build cross-validated classification models where we split into test and training data using a combination of the inferred and known labeled documents. Used a 10-fold cross validation and took the average cross validated accuracy. Results are:
 
 Logistic Regression Cross-Validation Accuracy: 0.936
+
 Naive Bayes Cross-Validation Accuracy: 0.828
+
 SVM Cross-Validation Accuracy: 0.935
+
 Random Forest Cross-Validation Accuracy: 0.906
+
 KNN Cross-Validation Accuracy: 0.917
 
 Naive Bayes drops off a little here, where as the rest of the models get better. All perform very well. Possibly need an adjustment score given that some labels are based on an inference accuracy of ~85%.  
@@ -61,9 +69,13 @@ Naive Bayes drops off a little here, where as the rest of the models get better.
 3. Build models with all the documents, both inferred and known, as our training data. Predict to see what the model thinks the label for the unknown documents would be. Compute the proportion of what cosine distance inference and this model prediction results in. Results are:
 
 Logistic Regression Proportion: 1.0
+
 Naive Bayes Proportion: 0.840
+
 SVM Proportion: 1.0
+
 Random Forest Proportion: 0.996
+
 KNN Proportion: 0.923
 
 Definitely think we have some over-fitting here given that the models our built upon the inferred cosine distance labels anyways. 
@@ -71,9 +83,13 @@ Definitely think we have some over-fitting here given that the models our built 
 4. Given the conclusion I drew from task 3, I decided to build classification models using only the labeled documents as training data. Again, I predict to see what the model thinks the label for the unknown documents would be. Then once again, compute the proportion of what cosine distance inference and the model prediction results in. Results are:
 
 Logistic Regression Proportion: 0.893
+
 Naive Bayes Proportion: 0.840
+
 SVM Proportion: 0.910
+
 Random Forest Proportion: 0.679
+
 KNN Proportion: 0.928
 
 Not surprisingly, KNN, does best here given that is the closest algorithm to what measuring cosine similarity would result in for inference. However, all classification models pretty closely align to what cosine distance inference would result in. 
