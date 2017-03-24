@@ -6,6 +6,8 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.stem.porter import PorterStemmer
 import re
 from wordcloud import WordCloud
+from tsne import bh_sne
+import numpy as np
 
 #Inference Tasks
 model = gensim.models.Doc2Vec.load('Models/Doc2Vec2.model')
@@ -58,13 +60,9 @@ for j in range(20, len(docvecs)):
     else:
         misDocs.append(docvecs.index_to_doctag(j))
 
+
 countTrue = all_data['Classification'].count(1)
 percentTrue = (countTrue) / len(all_data['Classification'])
-print 'Count of true documents: ' + str(countTrue)
-print 'Count of misinformed documents: ' + str(len(all_data['Classification']) - countTrue)
-print 'Percentage of true documents: ' + str(percentTrue)
-print 'Percentage of misinformed documents: ' + str(1 - percentTrue) 
-
 
 stopwords = stopwords.words("english") #stopwords list
 tokenizer = RegexpTokenizer(r'\w+')
@@ -131,9 +129,6 @@ for doc in misDocs:
         misText.append(cleanedText)
         f.close()
 
-print len(trueText)
-print len(misText)
-
 trueText = ' '.join(trueText)
 misText = ' '.join(misText)
 
@@ -149,3 +144,29 @@ plt.title("WordCloud for Misinformed Documents", fontsize=20)
 plt.axis("off")
 plt.show()
 
+
+#TSNE
+x_data = np.asarray(all_data['Feature Vector']).astype('float64')
+y_data= np.asarray(all_data['Classification'])
+
+'''
+for label in all_data['Classification']:
+    if label == 1:
+        y_data.append('TRUE')
+    else:
+        y_data.append('MISINFORMED')
+'''
+
+# perform t-SNE embedding
+vis_data = bh_sne(x_data)
+
+# plot the result
+vis_x = vis_data[:, 0]
+vis_y = vis_data[:, 1]
+
+plt.scatter(vis_x, vis_y, c=y_data, cmap=plt.cm.get_cmap("jet", 2))
+plt.colorbar(ticks=range(2))
+plt.clim(-0.5, 1.5)
+plt.grid()
+plt.title('t-SNE of Document Vectors')
+plt.show()
